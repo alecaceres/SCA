@@ -71,7 +71,8 @@ _rlocus_defaults = {
 
 # Main function: compute a root locus diagram
 def root_locus(sys, kvect=None, xlim=None, ylim=None,
-               plotstr=None, Plot=True, PrintGain=None, grid=None, pd=0, **kwargs):
+               plotstr=None, Plot=True, PrintGain=None, grid=None, pd=None,
+               **kwargs):
 
     """Root locus plot
 
@@ -96,9 +97,8 @@ def root_locus(sys, kvect=None, xlim=None, ylim=None,
         branches, calculate gain, damping and print.
     grid : bool
         If True plot omega-damping grid.  Default is False.
-    pd : polo deseado
-        Si se agrega el polo deseado se grafica por dónde pasará el LGR
-        por defecto pd = 0 y no graficará el polo
+    pd : complex, optional
+        Si no es None, se grafica en rojo el polo deseado.
 
     Returns
     -------
@@ -189,8 +189,8 @@ def root_locus(sys, kvect=None, xlim=None, ylim=None,
             ax.plot(real(zeros), imag(zeros), 'o')
 
         # Now plot the loci
-        for index, col in enumerate(mymat.T):
-            ax.plot(real(col), imag(col), plotstr, label='rootlocus')
+        #for index, col in enumerate(mymat.T):
+            #ax.plot(real(col), imag(col), plotstr, label='rootlocus')
 
         # Set up plot axes and labels
         if xlim:
@@ -209,14 +209,12 @@ def root_locus(sys, kvect=None, xlim=None, ylim=None,
             ax.axvline(0., linestyle=':', color='k')
 
     #graficar el rlocus
-    plt.plot(np.real(mymat),np.imag(mymat))
+    ax.plot(np.real(mymat),np.imag(mymat))
 
     #grafico del polo deseado
-    if pd != 0:
-        plt.gcf()
-        plt.plot(np.real(pd),np.imag(pd),"rx")
+    if pd is not None:
+        ax.plot(np.real(pd),np.imag(pd),"rx")
 
-    plt.show()
     return mymat, kvect
 
 
