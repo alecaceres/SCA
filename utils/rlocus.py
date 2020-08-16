@@ -53,10 +53,10 @@ import matplotlib.pyplot as plt
 from scipy import array, poly1d, row_stack, zeros_like, real, imag
 import scipy.signal             # signal processing toolbox
 import pylab                    # plotting routines
-from .xferfcn import _convert_to_transfer_function
-from .exception import ControlMIMONotImplemented
-from .sisotool import _SisotoolUpdate
-from . import config
+from control.xferfcn import _convert_to_transfer_function
+from control.exception import ControlMIMONotImplemented
+from control.sisotool import _SisotoolUpdate
+from control import config
 
 __all__ = ['root_locus', 'rlocus']
 
@@ -169,6 +169,7 @@ def root_locus(sys, kvect=None, xlim=None, ylim=None,
                         sisotool=sisotool,
                         bode_plot_params=kwargs['bode_plot_params'],
                         tvect=kwargs['tvect']))
+            plt.gcf().set_size_inches(20, 10)
 
         # zoom update on xlim/ylim changed, only then data on new limits
         # is available, i.e., cannot combine with _RLClickDispatcher
@@ -215,6 +216,7 @@ def root_locus(sys, kvect=None, xlim=None, ylim=None,
     if pd is not None:
         ax.plot(np.real(pd),np.imag(pd),"rx")
 
+    #plt.gcf().set_size_inches(20, 10)
     return mymat, kvect
 
 
